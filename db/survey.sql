@@ -1,0 +1,46 @@
+--------------------------------------------------------
+--  파일이 생성됨 - 화요일-1월-27-2026   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table SURVEY
+--------------------------------------------------------
+
+  CREATE TABLE "SOLDESK"."SURVEY" 
+   (	"SURVEY_ID" VARCHAR2(20 BYTE), 
+	"USER_ID" VARCHAR2(20 BYTE), 
+	"SURVEY_TYPE" VARCHAR2(5 BYTE), 
+	"SURVEY_QUESTION" VARCHAR2(200 BYTE), 
+	"EXTRA_POINT" NUMBER
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index SYS_C007713
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SOLDESK"."SYS_C007713" ON "SOLDESK"."SURVEY" ("SURVEY_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  Constraints for Table SURVEY
+--------------------------------------------------------
+
+  ALTER TABLE "SOLDESK"."SURVEY" ADD PRIMARY KEY ("SURVEY_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table SURVEY
+--------------------------------------------------------
+
+  ALTER TABLE "SOLDESK"."SURVEY" ADD CONSTRAINT "FK_SURVEY_USER" FOREIGN KEY ("USER_ID")
+	  REFERENCES "SOLDESK"."USERS" ("USER_ID") ENABLE;
