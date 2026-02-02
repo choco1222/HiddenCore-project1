@@ -37,6 +37,7 @@ CREATE TABLE activelog (
     user_id     INT,
     event_type  VARCHAR(20),
     event_count INT DEFAULT 1,
+    is_duplicate TINYINT(1) DEFAULT 0,
     event_time  DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_log_user
         FOREIGN KEY (user_id) REFERENCES users(user_id)
