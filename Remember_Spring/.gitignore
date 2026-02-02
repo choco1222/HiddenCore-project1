@@ -1,1 +1,13 @@
-/build/
+# Eclipse
+/.metadata/
+/.settings/
+
+# Tomcat
+/Servers/
+
+# Build
+/target/
+
+# Logs
+*.log
+
