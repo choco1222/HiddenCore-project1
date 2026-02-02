@@ -39,7 +39,7 @@ DEFAULT CHARSET=utf8mb4;
 
 -- ACTIVELOG 테이블
 CREATE TABLE activelog (
-    log_id      VARCHAR(20) PRIMARY KEY,
+    log_id      VARCHAR(50) PRIMARY KEY,
     user_id     VARCHAR(20),
     event_type  VARCHAR(20),
     event_count INT DEFAULT 1,
