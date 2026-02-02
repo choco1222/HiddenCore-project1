@@ -1,19 +1,13 @@
-CREATE DATABASE memory_spring
-CHARACTER SET utf8mb4
-COLLATE utf8mb4_general_ci;
-
-USE memory_spring;
-
 -- USERS 테이블
 CREATE TABLE users (
-    user_id        VARCHAR(20) PRIMARY KEY,
+    user_id        INT primary key,
     login_id       VARCHAR(30) NOT NULL UNIQUE,
     password       VARCHAR(100) NOT NULL,
     role           VARCHAR(10),
     name           VARCHAR(30) NOT NULL,
     phone          VARCHAR(20) NOT NULL,
     email          VARCHAR(50) NOT NULL,
-    linked_user_id VARCHAR(20),
+    linked_user_id INT,
     survey_type    VARCHAR(10),
     survey_score   INT,
     survey_date    DATE,
@@ -27,7 +21,7 @@ DEFAULT CHARSET=utf8mb4;
 -- SURVEY 테이블
 CREATE TABLE survey (
     survey_id       VARCHAR(20) PRIMARY KEY,
-    user_id         VARCHAR(20),
+    user_id         INT,
     survey_type     VARCHAR(10),
     survey_question VARCHAR(200),
     extra_point     INT,
@@ -40,7 +34,7 @@ DEFAULT CHARSET=utf8mb4;
 -- ACTIVELOG 테이블
 CREATE TABLE activelog (
     log_id      VARCHAR(50) PRIMARY KEY,
-    user_id     VARCHAR(20),
+    user_id     INT,
     event_type  VARCHAR(20),
     event_count INT DEFAULT 1,
     event_time  DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -50,10 +44,14 @@ CREATE TABLE activelog (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4;
 
+ALTER TABLE activelog
+MODIFY log_id VARCHAR(50);
+
+
 -- GAME_LOG 테이블
 CREATE TABLE game_log (
     game_id    VARCHAR(20) PRIMARY KEY,
-    user_id    VARCHAR(20),
+    user_id    INT,
     game_type  VARCHAR(30),
     game_level VARCHAR(10),
     score      INT,
@@ -68,7 +66,7 @@ DEFAULT CHARSET=utf8mb4;
 -- DAILY_ANALYSIS 테이블
 CREATE TABLE daily_analysis (
     analysis_id     VARCHAR(20) PRIMARY KEY,
-    user_id         VARCHAR(20),
+    user_id         INT,
     analysis_date   DATE,
     daily_score     INT,
     active_score    INT,
@@ -84,7 +82,7 @@ DEFAULT CHARSET=utf8mb4;
 
 -- ROUTINE 테이블
 CREATE TABLE routine (
-    user_id      VARCHAR(20) NOT NULL,
+    user_id      INT NOT NULL,
     routine_type VARCHAR(10) NOT NULL,
     routine_time VARCHAR(5)  NOT NULL,
     CONSTRAINT pk_routine PRIMARY KEY (user_id, routine_type, routine_time),
