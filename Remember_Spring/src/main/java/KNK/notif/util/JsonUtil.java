@@ -1,7 +1,8 @@
-package notif.util;
+package KNK.notif.util;
 
 import java.util.List;
-import notif.dto.NotifDTO;
+
+import KNK.notif.dto.NotifDTO;
 
 public class JsonUtil {
 

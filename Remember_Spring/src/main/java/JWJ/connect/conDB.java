@@ -1,4 +1,4 @@
-package connect;
+package JWJ.connect;
 import java.sql.Connection;
 import java.sql.DriverManager;
 

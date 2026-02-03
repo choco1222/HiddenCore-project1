@@ -1,4 +1,4 @@
-package daily_analysis;
+package JWJ.daily_analysis;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

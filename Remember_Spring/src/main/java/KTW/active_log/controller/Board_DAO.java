@@ -1,4 +1,4 @@
-package controller;
+package KTW.active_log.controller; //복사본, 일부 수정됨
 
 import java.sql.*;
 

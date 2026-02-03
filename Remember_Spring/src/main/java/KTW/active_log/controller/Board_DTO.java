@@ -1,4 +1,4 @@
-package controller;
+package KTW.active_log.controller; //복사본
 
 public class Board_DTO {
 

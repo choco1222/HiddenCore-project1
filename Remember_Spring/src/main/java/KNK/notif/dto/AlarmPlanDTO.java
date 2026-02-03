@@ -1,4 +1,4 @@
-package notif.dto;
+package KNK.notif.dto;
 
 import java.time.LocalTime;
 

@@ -1,4 +1,4 @@
-package controller;
+package KTW.active_log.controller;
 
 import java.io.IOException;
 

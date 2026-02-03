@@ -1,4 +1,4 @@
-package controller;
+package KTW.active_log.controller; //새로생김 DB연결확인
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import util.DB;
 
 @WebServlet("/api/report/today")
 public class TodayReportServlet extends HttpServlet {

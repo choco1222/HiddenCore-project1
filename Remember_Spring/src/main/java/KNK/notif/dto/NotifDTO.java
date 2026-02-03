@@ -1,4 +1,4 @@
-package notif.dto;
+package KNK.notif.dto;
 
 public class NotifDTO {
     private String key;

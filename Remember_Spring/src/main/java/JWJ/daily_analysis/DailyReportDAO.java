@@ -1,9 +1,7 @@
-package daily_analysis;
+package JWJ.daily_analysis;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import connect.conDB;
 
 /**
  * DAO (Data Access Object) - 데이터 접근 객체

@@ -1,4 +1,4 @@
-package daily_analysis;
+package JWJ.daily_analysis;
 
 /**
  * DTO (Data Transfer Object) - 데이터 전송 객체

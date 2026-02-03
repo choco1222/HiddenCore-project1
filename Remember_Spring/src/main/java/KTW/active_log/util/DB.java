@@ -1,4 +1,4 @@
-package util;
+package KTW.active_log.util; //복사본 삭제 확인
 
 import java.sql.Connection;
 import java.sql.DriverManager;

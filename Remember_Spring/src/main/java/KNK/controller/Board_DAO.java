@@ -1,4 +1,4 @@
-package controller;
+package KNK.controller;
 
 import java.sql.*;
 
