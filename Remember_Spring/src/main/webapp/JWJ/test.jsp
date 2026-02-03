@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Remake</title>
+<title>Test</title>
 </head>
 <body>
-<h1>없애지마!</h1>
+<h1>다시올려</h1>
 </body>
 </html>
