@@ -1,0 +1,432 @@
+
+
+/* ==================== 1. 기본 설정 및 레이아웃 ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Malgun Gothic', sans-serif;
+    background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    border: 5px solid #fbbf24;
+    padding: 30px;
+    position: relative; 
+    overflow: hidden; 
+}
+
+/* 화면 전환 효과 */
+.screen {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== 2. 공통 요소 (버튼, 헤더) ==================== */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.user-info { display: flex; align-items: center; gap: 10px; }
+.user-icon { font-size: 32px; }
+.user-text h2 { font-size: 18px; font-weight: bold; color: #1f2937; }
+.user-text p { font-size: 12px; color: #6b7280; }
+
+.date-box {
+    background: #fef3c7;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.date-box p { font-weight: 600; color: #374151; }
+
+.sub-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.back-btn {
+    background: none;
+    font-size: 24px;
+    margin-right: 10px;
+    color: #6b7280;
+}
+
+/* ==================== 3. 메인 화면 ==================== */
+.button-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.main-btn {
+    background: #fde68a;
+    border-radius: 20px;
+    padding: 35px 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1f2937;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.main-btn:hover { background: #fcd34d; transform: translateY(-2px); }
+.main-btn:active { transform: translateY(0); }
+
+.guardian-btn {
+    width: 100%;
+    background: #fbbf24;
+    border-radius: 20px;
+    padding: 18px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1f2937;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== 4. 체크 카드 (식사, 약) ==================== */
+.check-card {
+    background: #fef3c7;
+    border: 2px solid #fcd34d;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.check-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.check-btn {
+    width: 100%;
+    background: #fbbf24;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.check-btn.checked {
+    background: #fbbf24 !important; /* 원래 노란색 강제 유지 */
+    color: #1f2937 !important;      /* 원래 글자색(진회색) 유지 */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); /* 눌린 느낌만 살짝 줌 (안으로 들어간 그림자) */
+    transform: translateY(2px);     /* 버튼이 살짝 눌린 위치로 이동 */
+}
+
+
+/* ==================== 5. 기능별 카드 (양치, 외출) ==================== */
+.counter-card {
+    background: #dbeafe;
+    border: 2px solid #93c5fd;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.counter-card .count { font-size: 48px; font-weight: bold; color: #2563eb; }
+
+.counter-btn {
+    width: 100%;
+    background: #60a5fa;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+/* 외출 상태 */
+.status-card {
+    background: #dcfce7;
+    border: 2px solid #86efac;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.status-card p { font-size: 28px; font-weight: bold; color: #16a34a; }
+
+/* 외출 중일 때 색상 변경 */
+.status-card.out { background: #fed7aa; border-color: #fb923c; }
+.status-card.out p { color: #ea580c; }
+
+.action-btn {
+    width: 100%;
+    background: #fb923c;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+.action-btn.return { background: #22c55e; }
+
+/* ==================== 6. 팝업 (Overlay) ==================== */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+.popup-overlay.active { display: flex; }
+
+.popup-box {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 320px;
+    text-align: center;
+    animation: popupUp 0.3s ease-out;
+}
+
+@keyframes popupUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-close-btn {
+    width: 100%;
+    background: #8b5cf6;
+    color: white;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+/* ======================마이 페이지 버튼====================================*/
+
+.version-btn {
+    background-color: #fed7aa;
+    border-radius:  20px;
+    padding: 8px;
+    width: 26%;
+    max-width: 320px;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.reset-btn {
+    background: #fee2e2;      /* 연한 빨간색 배경 */
+    color: #ef4444;           /* 빨간색 글씨 */
+    border: 2px solid #fca5a5;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 800;         /* 태우 님이 원하시는 진한 글씨 */
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 5px;         /* 설정 버튼과의 간격 */
+}
+
+
+/* 기분 기록 전체 칸 */
+.record {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 3px solid #fed7aa;
+    width: 100%; /* 부모 너비에 맞춤 */
+}
+
+.record-title {
+    font-size: 16px;
+    font-weight: 800; /* 진하게 */
+    color: #4b5563;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* 6개 버튼 그리드 (2열) */
+.mood-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 1:1 비율 */
+    gap: 10px;
+}
+
+/* 감정 버튼 스타일 */
+.mood-btn {
+    background: #fff7ed;
+    border: 2px solid #ffedd5;
+    border-radius: 15px;
+    padding: 15px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mood-emoji {
+    font-size: 32px; /* 이모지 크게 */
+    margin-bottom: 5px;
+}
+
+.mood-text {
+    font-size: 16px;
+    font-weight: 800; /* 글씨 아주 진하게 */
+    color: #1f2937;
+}
+
+/* 클릭/선택 효과 */
+.mood-btn:active {
+    transform: scale(0.95);
+    background: #ffedd5;
+}
+
+.mood-btn.selected {
+    border-color: #fbbf24;
+    background: #fef3c7;
+}
+
+/* 연결 중 화면 전체 박스 */
+.calling-simple-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; /* 화면 높이 조절 */
+    text-align: center;
+}
+
+.calling-content {
+    margin-bottom: 80px;
+}
+
+/* "보호자 연결 중..." 메인 텍스트 */
+.calling-text {
+    font-size: 32px;
+    font-weight: 800; /* 아주 진하게 */
+    color: #1e40af;  /* 신뢰감을 주는 파란색 */
+    margin-bottom: 15px;
+    letter-spacing: -1px;
+}
+
+/* "잠시만 기다려주세요" 서브 텍스트 */
+.calling-sub-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: #6b7280;
+}
+
+/* 하단 취소 버튼 */
+.simple-cancel-btn {
+    width: 250px;
+    background: #ef4444; /* 빨간색 */
+    color: white;
+    padding: 20px 0;
+    border-radius: 15px;
+    font-size: 24px;
+    font-weight: 800;
+    box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+}
+
+.simple-cancel-btn:active {
+    transform: scale(0.95);
+    background: #dc2626;
+}
+
+
+/*지울코드 */
+.reset-btn:hover {
+    background: #fecaca;
+    transform: scale(0.95);    /* 눌리는 효과 */
+}
+
+.date-container {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background-color: #fdf2f2; /* 연한 분홍색/살구색 배경 */
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+#live-date {
+    font-size: 22px;   /* 글씨 크기 키움 */
+    font-weight: 800;  /* 아주 진하게 */
+    color: #334155;    /* 짙은 회색 */
+    margin: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
