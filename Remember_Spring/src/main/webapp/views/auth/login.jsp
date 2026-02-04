@@ -75,6 +75,6 @@
         </div>
     </div>
 
-    <script src="./js/auth-script.js"></script>
+    <script src="../../assets/js/auto-script.js"></script>
 </body>
 </html>

@@ -38,7 +38,7 @@
         </main>
     </div>
 
-    <script src="${pageContext.request.contextPath}/js/weekly.js"></script>
+    <script src="../../assets/js/weekly.js"></script>
     <script>
         // 서버에서 전달된 JSON 데이터를 JavaScript 객체로 변환
         var LOCAL_DATA = { activeLog: [], gameLog: [] };

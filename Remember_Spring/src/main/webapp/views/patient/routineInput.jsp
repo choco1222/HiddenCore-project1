@@ -105,6 +105,6 @@
         </div>
     </div>
 
-    <script src="./js/routine-script.js"></script>
+    <script src="../../assets/js/routine-script.js"></script>
 </body>
 </html>

@@ -68,7 +68,7 @@
         </main>
     </div>
 
-    <script src="${pageContext.request.contextPath}/js/monthly.js"></script>
+    <script src="../../assets/js/monthly.js"></script>
     <script>
         // 월간 리포트 로드 함수
         function loadMonthlyReport() {

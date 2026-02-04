@@ -192,6 +192,6 @@
         </div>
     </div>
 
-    <script src="./js/survey-script.js"></script>
+    <script src="../../assets/js/survey-script.js"></script>
 </body>
 </html>
