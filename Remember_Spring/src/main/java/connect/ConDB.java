@@ -7,8 +7,8 @@ public class ConDB {
 
     private static final String URL =
         "jdbc:mysql://localhost:3306/memory_spring?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul";
-    private static final String USER = "root"; //여기에계정
-    private static final String PASS = "12345";
+    private static final String USER = "HiddenCore"; //여기에계정
+    private static final String PASS = "popo0997!!";
 
     static {
         try {

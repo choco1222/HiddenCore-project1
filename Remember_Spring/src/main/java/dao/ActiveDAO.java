@@ -38,11 +38,6 @@ public class ActiveDAO {
     
     
     }
-//////////////////////////////////////////////////////////////////////////////////////
-    public boolean isDuplicate(String type) {
-        // DB에서 오늘 날짜와 type이 일치하는 데이터가 있는지 확인하는 코드
-        // 일단 에러 안 나게 하려면 return false; 라도 적어두세요!
-        return false; 
-    }
+
 	
 }

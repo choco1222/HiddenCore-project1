@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  * ctrl + F ) INPUT PAGE └─ 환자 미연결 → patientIdInput.jsp
  */
 @WebServlet("/loginProc")
-public class loginProc extends HttpServlet {
+public class LoginProc extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

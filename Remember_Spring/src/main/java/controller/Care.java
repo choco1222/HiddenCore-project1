@@ -1,29 +1,29 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.ActiveDAO;
+
 @WebServlet("/saveLog")
-public class CareServlet extends HttpServlet {
+public class Care extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String type = request.getParameter("type");
-	    ActiveDAO dao1 = new ActiveDAO();
 
-	 // 이 아래 두 줄이 핵심입니다.
-	    boolean check = dao1.isDuplicate(type); 
-	    response.getWriter().print(check);
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String type = request.getParameter("type");
+		ActiveDAO dao1 = new ActiveDAO();
+
 		request.setCharacterEncoding("UTF-8");
 
 		String eventType = request.getParameter("type");

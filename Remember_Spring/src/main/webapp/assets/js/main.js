@@ -1,3 +1,5 @@
+let isMedActive = false;
+let isMedSuccess = false;
 // [1] 날짜 및 저장 유틸리티
 const getToday = () => new Date().toISOString().split('T')[0];
 
@@ -8,19 +10,19 @@ const storage = {
 };
 
 // [자바 연결 핵심 함수] 서버로 데이터 전송
-function sendToServer(type, time) {
-	fetch('/remember_Spring/saveLog', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-		body: `type=${encodeURIComponent(type)}&time=${encodeURIComponent(time)}`
-	})
-		.then(response => {
-			if (!response.ok) throw new Error('서버 응답 에러 (상태코드: ' + response.status + ')');
-			console.log(`✅ 서버 저장 완료: ${type}`);
-		})
-		.catch(error => {
-			console.error('❌ 서버 전송 실패:', error);
-		});
+// [수정된 전송 함수] userId 매개변수 추가
+function sendToServer(type, time, userId = "guest") { // 기본값 guest
+    fetch('/remember_Spring/saveLog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        // ★ body에 userId를 추가해서 보냅니다!
+        body: `type=${encodeURIComponent(type)}&time=${encodeURIComponent(time)}&userId=${encodeURIComponent(userId)}`
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('서버 응답 에러');
+        console.log(`✅ 서버 저장 완료: ${type} (유저: ${userId})`);
+    })
+    .catch(error => console.error('❌ 서버 전송 실패:', error));
 }
 
 // [3] 식사, 약, 양치 체크 기능 (알림에 시간 추가)
@@ -67,31 +69,41 @@ function checkItem(buttonId) {
         'brush-dinner-btn': '양치'
     };
 
+	// [A] 식사 버튼 클릭 시 감시 타이머 가동
+// [A] 식사 버튼 클릭 시 감시 타이머 가동
+const mealButtons = ['breakfast-btn', 'lunch-btn', 'dinner-btn'];
+if (mealButtons.includes(buttonId)) {
+    isMedActive = false; 
+    isMedSuccess = false; 
+    const mealType = buttonId.split('-')[0]; 
 
-	if (buttonId === 'breakfast-btn') {
-        isMedActive = false; // 아직은 감시 구간 아님
-        isMedSuccess = false;
+    // 1단계: 30분 대기
+    setTimeout(() => {
+        isMedActive = true; 
+        alert(`🔔 식사 후 30분 경과! 10분 내로 약을 복용하세요.`);
 
+        // 2단계: 10분 감시 시작
         setTimeout(() => {
-            // 30분 경과 시점: 이제부터 10분간 감시 시작
-            isMedActive = true; 
+            // [수정 포인트] 성공이면 "0", 실패면 "1"
+            const finalValue = isMedSuccess ? "0" : "1"; 
+            const finalType = isMedSuccess ? `MED_TRUE_${mealType}` : `MED_FALSE_${mealType}`;
             
-            // 10분(600000ms) 뒤에 최종 결과 확인 및 서버 전송
-            setTimeout(() => {
-                const finalResult = isMedSuccess; // 10분 동안 눌렀으면 true, 아니면 false
-                sendToServer(finalResult ? "MED_TRUE" : "MED_FALSE", new Date().toLocaleTimeString());
-                isMedActive = false; // 감시 종료
-            }, 600000); 
+            // 서버(SQL)로 전송
+            sendToServer(finalType, finalValue); 
+            
+            console.log(`감시 종료. 결과: ${finalType}, 보낸 값: ${finalValue}`);
+            isMedActive = false; 
+        }, 600000); // 10분
 
-        }, 1800000); // 30분 대기
-    }
+    }, 1800000); // 30분
+}
 
-    // 2. 약 버튼 클릭 시: '감시 구간' 안에서 눌렀을 때만 success를 true로 변경
-    if (buttonId.includes('medicine')) {
-        if (isMedActive) {
-            isMedSuccess = true;
-        }
+// [B] 약 버튼 클릭 시 '성공'으로 기록 변경
+if (buttonId.includes('medicine')) {
+    if (isMedActive) {
+        isMedSuccess = true;
     }
+}
 	
     const englishType = typeMapping[buttonId] || buttonId;
     const koreanName = koMapping[buttonId] || "기록";
@@ -104,6 +116,8 @@ function checkItem(buttonId) {
     btn.classList.add('checked');
     // ★ 알림창에 시간(timeString)이 나오도록 수정했습니다.
     alert(`[${timeString}] ${koreanName} 기록이 완료되었습니다!`);
+    
+    
     
     
 }
@@ -191,47 +205,29 @@ function resetData() {
 // [기분 기록 함수 수정]
 // [기분 기록 함수] - 서버는 영어로, 알림은 한글+시간으로!
 function checkMood(moodName, emoji) {
-	const today = getToday();
-	let moodData = JSON.parse(localStorage.getItem('moodData')) || [];
-	const alreadyDone = moodData.find(item => item.date === today);
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+    const timeString = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true });
 
-	if (alreadyDone) {
-		alert(`이미 오늘 기분을 [${alreadyDone.mood} ${alreadyDone.emoji}]라고 기록하셨습니다!`);
-		return;
-	}
+    let moodData = JSON.parse(localStorage.getItem('moodData')) || [];
+    
+    // [살짝 추가] 오늘 날짜 기록이 이미 있으면 지우기 (중복 방지 핵심)
+    moodData = moodData.filter(item => item.date !== today);
 
-	const now = new Date();
-	const timeString = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true });
+    moodData.push({ date: today, mood: moodName, emoji: emoji, time: timeString });
+    localStorage.setItem('moodData', JSON.stringify(moodData));
 
-	// --- ★ 기분 영문 매핑 테이블 ★ ---
-	const moodMapping = {
-		'기쁨': 'Mood_happy',
-		'평범': 'Mood_neutral',
-		'슬픔': 'Mood_sad',
-		'화남': 'Mood_angry',
-		'피곤': 'Mood_tired',
-		'불안': 'Mood_anxious'
-	};
+    const moodMapping = { '기쁨': 'Mood_happy', '평범': 'Mood_neutral', '슬픔': 'Mood_sad', '화남': 'Mood_angry', '피곤': 'Mood_tired', '불안': 'Mood_anxious' };
+    sendToServer(moodMapping[moodName] || moodName, timeString);
 
-	// 매핑된 영문 값이 없으면 기본값으로 전송
-	const englishMood = moodMapping[moodName] || `MOOD_${moodName}`;
-
-	// 1. 로컬 저장 (UI 유지용은 한글로 유지)
-	moodData.push({ date: today, mood: moodName, emoji: emoji, time: timeString });
-	localStorage.setItem('moodData', JSON.stringify(moodData));
-
-	// 2. ★ 서버로는 영어 전송 ★
-	sendToServer(englishMood, timeString);
-
-	// 3. 알림 및 화면 이동
-	alert(`[${timeString}] 오늘의 기분(${moodName} ${emoji})이 기록되었습니다!`);
-	
-	if (typeof showScreen === 'function') {
-		showScreen('emergency'); // 기록 후 달력/분석 화면으로 이동
-	}
+    alert(`[${timeString}] 기록 완료!`);
+    
+    // [수정] 404 방지용 상대 경로 (가장 안전함) **위치확인
+   location.href = ../../../../controller/CalendarServlet";; 
 }
 // ------------------------------------------------------------------------------------------------------------------------------//
-
+// ★ 파일명이 아니라 서블릿을 호출해야 함!
+   
 function updateDate() {
 	const now = new Date();
 	const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
@@ -280,70 +276,6 @@ function sendLog(type) {
 }
 
 
-// 기분 기록 후 달력에 표시하기 위한 예시 로직
-function renderCalendar(moodData) {
-    // moodData는 [{date: '2026-02-03', mood: 'MOOD_happy'}, ...] 형태
-    moodData.forEach(item => {
-        const dateDay = item.date.split('-')[2]; // '03' 추출
-        const cell = document.querySelector(`.calendar-cell[data-date="${dateDay}"]`);
-        
-        if (cell) {
-            // 해당 날짜 칸에 이모지 추가
-            const emojiSpan = document.createElement('span');
-            emojiSpan.innerText = getEmoji(item.mood); // MOOD_happy -> 😊
-            cell.appendChild(emojiSpan);
-        }
-    });
-}
-
-
-
-
-
-
-
-
-function checkMood(moodName, emoji) {
-    const today = getToday(); // yyyy-mm-dd
-    const now = new Date();
-    const day = now.getDate(); // 오늘 날짜 (숫자)
-    const timeString = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-    // 1. 영문 매핑 (DB 저장용)
-    const moodMapping = {
-        '기쁨': 'Mood_happy',
-        '평범': 'Mood_neutral',
-        '슬픔': 'Mood_sad',
-        '화남': 'Mood_angry',
-        '피곤': 'Mood_tired'
-    };
-    const englishMood = moodMapping[moodName] || `MOOD_${moodName}`;
-
-    // 2. 서버 전송
-    sendToServer(englishMood, timeString);
-
-    // 3. 로컬 저장 (달력에 즉시 반영하기 위함)
-    let moodData = JSON.parse(localStorage.getItem('moodData')) || [];
-    moodData.push({ date: today, mood: englishMood, emoji: emoji, time: timeString, korName: moodName });
-    localStorage.setItem('moodData', JSON.stringify(moodData));
-
-    alert(`[${timeString}] 오늘의 기분(${moodName})이 기록되었습니다!`);
-
-    // 4. 달력 화면으로 이동
-    showScreen('calendar-screen'); 
-
-    // 5. ★ 중요: 방금 저장한 데이터를 포함해서 달력을 새로 그림
-    renderCalendar(); 
-}
-
-
-
-
-
-
-
-
-
 // 페이지 로드 시 실행되는 함수
 window.onload = function() {
     fetch('getUser') // GET 방식은 기본값이므로 추가 설정 없이 호출 가능
@@ -359,7 +291,20 @@ window.onload = function() {
         .catch(error => console.error('이름 불러오기 실패:', error));
 };
 
-
+window.onload = function() {
+    fetch('../../../../controller/GetUser') // 경로 확인!
+        .then(response => response.text())
+        .then(userName => {
+            // index.jsp에 있는 id 이름과 똑같이 맞춰야 함!
+            const nameElement = document.getElementById('user-id-display');
+            if (nameElement) {
+                nameElement.innerText = userName; // '님'은 html에 있으니 이름만 넣기
+            }
+            console.log("접속 유저: " + userName);
+        })
+        .catch(error => console.error('이름 불러오기 실패:', error));
+};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // 삭제할 코드
