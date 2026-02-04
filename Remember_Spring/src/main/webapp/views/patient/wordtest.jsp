@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>숨은 낱말 찾기</title>
-    <link rel="stylesheet" href="../../../assets/css/card.css" />
+   <link rel="stylesheet" href="../../assets/css/word.css" >
 </head>
 <body>
     <div class="container">
@@ -17,13 +17,13 @@
                 <p>난이도를 선택하세요</p>
                 <div class="difficulty-buttons">
                     <button class="difficulty-btn easy" onclick="startGame('easy')">
-                        🟢 하 (7x7, 5단어, 15초)
+                         하 (7x7, 5단어, 25초)
                     </button>
                     <button class="difficulty-btn medium" onclick="startGame('medium')">
-                        🟡 중 (8x8, 7단어, 20초)
+                         중 (8x8, 7단어, 35초)
                     </button>
                     <button class="difficulty-btn hard" onclick="startGame('hard')">
-                        🔴 상 (10x10, 9단어, 30초)
+                         상 (8x8, 9단어, 50초)
                     </button>
                 </div>
             </div>
@@ -58,10 +58,6 @@
                     <h2>찾을 단어</h2>
                     <div class="word-items" id="wordList"></div>
                     <div id="completionMessage"></div>
-                    <div class="progress-info">
-                        <p><strong>진행률:</strong> <span id="progress">0 / 0</span></p>
-                        <p class="hint" id="hintText"></p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -88,7 +84,7 @@
                 wordCount: 5, 
                 words: ['두리안', '청포도', '수박', '블루베리', '딸기'],
                 wordListChosungCount: 0,
-                timeLimit: 15,
+                timeLimit: 25,
                 baseScore: 100
             },
             medium: { 
@@ -96,15 +92,15 @@
                 wordCount: 7, 
                 words: ['가족여행', '나들이', '귀향길', '배우자', '가시버시', '가정', '장인어른'],
                 wordListChosungCount: 0,
-                timeLimit: 20,
+                timeLimit: 35,
                 baseScore: 100
             },
             hard: { 
-                size: 10, 
+                size: 8, 
                 wordCount: 9, 
                 words: ['케이크', '생일파티', '결혼식', '주인공', '선물', '청첩장', '축하연', '주최자', '축하하다'],
                 wordListChosungCount: 5,
-                timeLimit: 30,
+                timeLimit: 50,
                 baseScore: 100
             }
         };
@@ -204,33 +200,7 @@
             }
             
             document.getElementById('score').textContent = score + '점';
-            
-            const completionMessage = document.getElementById('completionMessage');
-            
-            if (completed && timeLeft > 0) {
-                completionMessage.innerHTML = `
-                    <div class="completion-message">
-                        <p>🎉 축하합니다! 모든 단어를 찾았습니다!</p>
-                        <div class="score-display">점수: ${score}점</div>
-                        <p style="margin-top: 10px;">남은 시간: ${timeLeft}초</p>
-                    </div>
-                `;
-            } else if (completed && timeLeft <= 0) {
-                completionMessage.innerHTML = `
-                    <div class="completion-message">
-                        <p>🎉 모든 단어를 찾았습니다!</p>
-                        <div class="score-display">점수: ${score}점</div>
-                    </div>
-                `;
-            } else {
-                completionMessage.innerHTML = `
-                    <div class="game-over-message">
-                        <p>⏰ 시간 종료!</p>
-                        <div class="score-display">점수: ${score}점</div>
-                        <p style="margin-top: 10px;">찾은 단어: ${foundWords.length} / ${words.length}</p>
-                    </div>
-                `;
-            }
+
         }
 
         // 그리드 생성
@@ -411,16 +381,7 @@
                 wordList.appendChild(wordDiv);
             });
             
-            // 진행률 업데이트
-            document.getElementById('progress').textContent = `${foundWords.length} / ${words.length}`;
-            
-            // 힌트 텍스트
-            const hintText = document.getElementById('hintText');
-            if (difficulty === 'hard') {
-                hintText.textContent = '💡 파란색 배경: 초성 힌트';
-            } else {
-                hintText.textContent = '';
-            }
+
         }
 
         // 셀 클릭 처리
@@ -458,14 +419,19 @@
                 const initialDx = Math.sign(secondCell.row - firstCell.row);
                 const initialDy = Math.sign(secondCell.col - firstCell.col);
                 
-                const currentDx = Math.sign(row - firstCell.row);
-                const currentDy = Math.sign(col - firstCell.col);
+                const currentDx = Math.sign(row - lastCell.row);
+                const currentDy = Math.sign(col - lastCell.col);
                 
+                // 같은 방향으로 연속적으로 이동하는 경우 (대각선 포함)
                 if (currentDx === initialDx && currentDy === initialDy) {
-                    const expectedRow = lastCell.row + initialDx;
-                    const expectedCol = lastCell.col + initialDy;
+                    // 바로 인접한 셀인지 확인
+                    const rowDiff = Math.abs(row - lastCell.row);
+                    const colDiff = Math.abs(col - lastCell.col);
                     
-                    if (row === expectedRow && col === expectedCol) {
+                    // 가로/세로/대각선으로 한 칸 이동
+                    if ((rowDiff === 0 && colDiff === 1) || 
+                        (rowDiff === 1 && colDiff === 0) || 
+                        (rowDiff === 1 && colDiff === 1)) {
                         selectedCells.push({ row, col });
                         updateCellStyles();
                     }

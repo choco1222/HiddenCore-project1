@@ -15,22 +15,21 @@
             <p>난이도를 선택하세요</p>
             <button class="difficulty-btn easy" onclick="startGame('easy')">
                 <div>하 (쉬움)</div>
-                <div class="difficulty-info">3x4 (12장) • 15초</div>
+                <div class="difficulty-info">3x4 (12장) • 20초</div>
             </button>
             <button class="difficulty-btn medium" onclick="startGame('medium')">
                 <div>중 (보통)</div>
-                <div class="difficulty-info">4x4 (15장) • 20초</div>
+                <div class="difficulty-info">4x4 (15장) • 30초</div>
             </button>
             <button class="difficulty-btn hard" onclick="startGame('hard')">
                 <div>상 (어려움)</div>
-                <div class="difficulty-info">4x5 (20장) • 30초</div>
+                <div class="difficulty-info">4x5 (20장) • 40초</div>
             </button>
         </div>
 
         <div id="gameScreen" class="hidden">
             <div class="game-header">
                 <div class="time" id="timeDisplay">시간: 0초</div>
-                <div class="score" id="scoreDisplay">점수: 0점</div>
             </div>
             <div id="grid" class="grid"></div>
             <div id="gameoverScreen" class="hidden gameover">
@@ -46,6 +45,12 @@
     </div>
 
     <script>
+    
+    <%
+    // 테스트용 세션 설정
+    session.setAttribute("user_id", "test_user");
+    %>
+    
         var card0 = '', card1 = '', card2 = '', card3 = '', card4 = '';
         var card5 = '', card6 = '', card7 = '', card8 = '', card9 = '';
         var card10 = '', card11 = '', card12 = '', card13 = '', card14 = '';
@@ -80,17 +85,17 @@
             
             if (level === 'easy') {
                 totalCards = 12;
-                timeLeft = 15;
+                timeLeft = 20;
                 pointPerMatch = 16;
                 setupEasyCards();
             } else if (level === 'medium') {
                 totalCards = 16;
-                timeLeft = 20;
+                timeLeft = 30;
                 pointPerMatch = 12;
                 setupMediumCards();
             } else if (level === 'hard') {
                 totalCards = 20;
-                timeLeft = 30;
+                timeLeft = 40;
                 pointPerMatch = 10;
                 setupHardCards();
             }
@@ -205,8 +210,8 @@
         }
 
         function startPreview() {
-            updateDisplay('미리보기: 4초', score);
-            var preview = 4;
+            updateDisplay('미리보기: 5초', score);
+            var preview = 5;
             var previewTimer = setInterval(function() {
                 preview = preview - 1;
                 updateDisplay('미리보기: ' + preview + '초', score);
@@ -445,7 +450,6 @@
 
         function updateDisplay(timeText, scoreValue) {
             document.getElementById('timeDisplay').textContent = timeText;
-            document.getElementById('scoreDisplay').textContent = '점수: ' + scoreValue + '점';
         }
 
         function endGame(success) {
@@ -458,7 +462,7 @@
             document.getElementById('gameoverScreen').classList.remove('hidden');
             
             if (success === true) {
-                if (currentLevel === 'medium', 'easy') {
+                if (currentLevel === 'medium'|| currentLevel === 'easy') {
                     score = score + 4;
                 }
                 document.getElementById('resultText').textContent = '🎉 성공!';
