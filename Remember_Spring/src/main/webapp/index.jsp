@@ -8,8 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="./assets/css/css.css">
 	
-<script src="<%=request.getContextPath()%>/js/notify.js"></script>	
-	
+<script src="<%=request.getContextPath()%>/js/notify.js"></script>
 </head>
 <body>
     <div class="app-container">
