@@ -81,8 +81,8 @@ public class GameDAO {
 		                   "WHERE user_id = ? AND game_type = ? AND DATE(played_at) = ?";
 		
 		try (Connection conn = getConnection()) {
-			// 평균 계산
-			double avgScore = 0.0;
+			// 평균 계산 (반올림하여 정수로 변환)
+			int avgScore = 0;
 			try (PreparedStatement selectPstmt = conn.prepareStatement(selectSql)) {
 				selectPstmt.setInt(1, userId);
 				selectPstmt.setString(2, gameType);
@@ -90,19 +90,19 @@ public class GameDAO {
 				
 				ResultSet rs = selectPstmt.executeQuery();
 				if (rs.next()) {
-					avgScore = rs.getDouble("avg_score");
+					avgScore = (int) Math.round(rs.getDouble("avg_score"));
 				}
 			}
 			
 			// 평균 업데이트
 			try (PreparedStatement updatePstmt = conn.prepareStatement(updateSql)) {
-				updatePstmt.setDouble(1, avgScore);
+				updatePstmt.setInt(1, avgScore);
 				updatePstmt.setInt(2, userId);
 				updatePstmt.setString(3, gameType);
 				updatePstmt.setDate(4, Date.valueOf(date));
 				
 				int result = updatePstmt.executeUpdate();
-				System.out.println(userId + "번 사용자의 " + date + " " + gameType + " 평균: " + avgScore);
+				System.out.println(userId + "번 사용자의 " + date + " " + gameType + " 평균: " + avgScore + "점");
 				return result > 0;
 			}
 			
@@ -193,8 +193,8 @@ public class GameDAO {
 	 * @param date     날짜 (년-월-일)
 	 * @return Map<게임타입, 평균점수>
 	 */
-	public Map<String, Double> getDailyAverageScoreByType(int userId, LocalDate date) {
-	    Map<String, Double> averageScores = new HashMap<>();
+	public Map<String, Integer> getDailyAverageScoreByType(int userId, LocalDate date) {
+	    Map<String, Integer> averageScores = new HashMap<>();
 	    
 	    // ✅ avg_score 컬럼에서 읽어오기 (이미 계산되어 저장된 값)
 	    String sql = "SELECT DISTINCT game_type, avg_score " +
@@ -212,7 +212,7 @@ public class GameDAO {
 	        
 	        while (rs.next()) {
 	            String gameType = rs.getString("game_type");
-	            double avgScore = rs.getDouble("avg_score");
+	            int avgScore = rs.getInt("avg_score");
 	            averageScores.put(gameType, avgScore);
 	        }
 	        
@@ -344,7 +344,7 @@ public class GameDAO {
 				+ "game_id VARCHAR(50) NOT NULL, " + "user_id INT NOT NULL, "
 				+ "game_type VARCHAR(20) NOT NULL, " + "game_level VARCHAR(20) NOT NULL, " + "play_time VARCHAR(20), "
 				+ "score INT NOT NULL, " 
-				+ "avg_score DOUBLE DEFAULT 0, "  // ✅ avg_score 컬럼 추가
+				+ "avg_score INT DEFAULT 0, "  // ✅ avg_score 컬럼 - 정수형
 				+ "played_at TIMESTAMP NOT NULL, "
 				+ "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " + "INDEX idx_user_game (user_id, game_id), "
 				+ "INDEX idx_user_type (user_id, game_type), " + "INDEX idx_played_at (played_at)" + ")";
