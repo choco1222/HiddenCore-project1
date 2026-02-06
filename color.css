@@ -1,0 +1,263 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: #FFE294;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+}
+
+.container {
+	background: #FFF0C7;
+	border-radius: 24px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+	padding: 40px;
+	max-width: 800px;
+	width: 100%;
+}
+
+.start-screen, .game-screen, .end-screen {
+	text-align: center;
+}
+
+h1 {
+	color: #333;
+	font-size: 2.5em;
+	margin-bottom: 20px;
+}
+
+.instructions {
+	font-size: 1.2em;
+	color: #555;
+	margin-bottom: 30px;
+	line-height: 1.6;
+}
+
+.instructions strong {
+	color: #667eea;
+}
+
+.instructions small {
+	display: block;
+	color: #999;
+	font-size: 0.9em;
+	margin-top: 10px;
+}
+
+.btn {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: white;
+	border: none;
+	padding: 15px 40px;
+	font-size: 1.3em;
+	font-weight: bold;
+	border-radius: 15px;
+	cursor: pointer;
+	transition: all 0.3s;
+	box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+}
+
+.difficulty-btn {
+	background: white;
+	border: 3px solid #ddd;
+	border-radius: 20px;
+	padding: 25px 35px;
+	cursor: pointer;
+	transition: all 0.3s;
+	min-width: 150px;
+}
+
+.difficulty-btn:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.difficulty-btn.easy {
+	border-color: #10b981;
+}
+
+.difficulty-btn.easy:hover {
+	background: #f0fdf4;
+	border-color: #10b981;
+}
+
+.difficulty-btn.medium {
+	border-color: #f59e0b;
+}
+
+.difficulty-btn.medium:hover {
+	background: #fffbeb;
+	border-color: #f59e0b;
+}
+
+.difficulty-btn.hard {
+	border-color: #ef4444;
+}
+
+.difficulty-btn.hard:hover {
+	background: #fef2f2;
+	border-color: #ef4444;
+}
+
+.difficulty-icon {
+	font-size: 3em;
+	margin-bottom: 10px;
+}
+
+.difficulty-name {
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 5px;
+}
+
+.difficulty-desc {
+	font-size: 0.9em;
+	color: #666;
+}
+
+.score-board {
+	display: flex;
+	justify-content: space-between;
+	background: #f8f9fa;
+	padding: 20px;
+	border-radius: 15px;
+	margin-bottom: 20px;
+	font-size: 1.2em;
+}
+
+.score-item {
+	font-weight: bold;
+	color: #555;
+}
+
+.score-value {
+	color: #667eea;
+}
+
+.question-card {
+	background: #f8f9fa;
+	padding: 50px;
+	border-radius: 20px;
+	margin-bottom: 30px;
+}
+
+.question-title {
+	font-size: 1.5em;
+	color: #555;
+	margin-bottom: 30px;
+}
+
+.color-word {
+	font-size: 7em;
+	font-weight: bold;
+	margin: 30px 0;
+}
+
+.feedback {
+	font-size: 1.8em;
+	font-weight: bold;
+	margin: 20px 0;
+	min-height: 40px;
+}
+
+.feedback.correct {
+	color: #10b981;
+}
+
+.feedback.incorrect {
+	color: #ef4444;
+}
+
+.answer-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 15px;
+	margin-top: 20px;
+}
+
+.answer-btn {
+	background: white;
+	border: 4px solid #ddd;
+	border-radius: 15px;
+	padding: 20px;
+	cursor: pointer;
+	transition: all 0.3s;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.answer-btn:hover {
+	transform: scale(1.05);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.answer-btn:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.color-circle {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+.color-name {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #333;
+}
+
+.final-score {
+	font-size: 4em;
+	font-weight: bold;
+	color: #667eea;
+	margin: 20px 0;
+}
+
+.final-message {
+	font-size: 1.5em;
+	color: #555;
+	margin-bottom: 30px;
+}
+
+.hidden {
+	display: none;
+}
+
+.timer-bar-container {
+	background: #e5e7eb;
+	height: 10px;
+	border-radius: 10px;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+
+.timer-bar {
+	height: 100%;
+	transition: width 0.1s linear, background 0.3s;
+}
+
+@media ( max-width : 768px) {
+	.answer-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.color-word {
+		font-size: 4em;
+	}
+}
