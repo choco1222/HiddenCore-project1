@@ -1,0 +1,615 @@
+/* ================= 폰트 (나중에 적용 예정) ================= */
+@font-face {
+    font-family: 'Dunggeunmo';
+    src: url('../font/Hakgyoansim%20Dunggeunmiso%20OTF%20R.otf') format('opentype');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Dunggeunmo';
+    src: url('../font/Hakgyoansim%20Dunggeunmiso%20OTF%20B.otf') format('opentype');
+    font-weight: 700;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 배경 기준: main.jsp (프레임 색 + 풀). 서브 화면은 모두 동일 배경 적용 */
+:root {
+    --frame-bg: #FFFBEF;
+}
+
+body {
+    background: #FFDF7C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Dunggeunmo', sans-serif;
+}
+
+/* main.jsp 버튼·카드 텍스트에 폰트 적용 */
+.app-frame button,
+.app-frame .card-bg-text {
+    font-family: 'Dunggeunmo', sans-serif;
+}
+
+/* ================= 프레임 (440x956 기준, 반응형) ================= */
+.app-frame {
+    width: 100%;
+    max-width: 440px;
+    height: 100vh;
+    max-height: 956px;
+    min-height: 560px;
+    background: var(--frame-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 441px) {
+    .app-frame {
+        height: 956px;
+        border-radius: 28px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    }
+}
+
+/* ================= 배경 벡터 ================= */
+.bg {
+    position: absolute;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+}
+.bg1 {
+    top: 140px;
+    left: -30px;
+    width: 240px;
+    height: auto;
+}
+.bg2 {
+    top: 360px;
+    right: -40px;
+    width: 240px;
+    height: auto;
+}
+/* Vector.png: 외출·게임 사이 뒤쪽 배경 */
+.bg-outing-game {
+    top: 50%;
+    right: -30px;
+    transform: translateY(-50%);
+    width: 220px;
+    height: auto;
+}
+/* Vector1.png: 식사 버튼 뒤쪽 배경, 왼쪽 프레임 끝 선에 맞춤 */
+.bg-meal {
+    top: 200px;
+    left: 0;
+    width: 220px;
+    height: auto;
+}
+
+/* ================= 버튼 위쪽: 피그마 디자인 100% 동일 ================= */
+#home .header {
+    position: relative;
+    z-index: 1;
+    padding: 28px 24px 10px;
+}
+
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* flower 아이콘: 동그라미 배경 연한 오렌지-노랑 (피그마) */
+.logo-circle {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    min-height: 52px;
+    border-radius: 50%;
+    background: #574444;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.logo-circle img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+/* 기억해, 봄: 큰 볼드, 진한 갈색/검정 */
+.title-text {
+    font-size: 46px;
+    font-weight: 700;
+    color: #574444;
+    margin-left: 0;
+    flex: 1;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+/* 상단 메뉴.png: 타이틀·플라워와 세로 정렬, 크기·위치 피그마 동일 */
+.menu-btn {
+    width:36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+}
+.menu-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+/* 환자님 안녕하세요: 타이틀 '기' 아래 정렬, 띄움 간격 */
+.greeting {
+    margin-top: 24px;
+    font-size: 26px;
+    font-weight: 400;
+    color: #574444;
+    line-height: 1.4;
+}
+
+/* 날짜: 인사말 아래, 볼드·인사말보다 큼·타이틀보다 작음 */
+.date-text {
+    margin-top: 10px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #574444;
+}
+
+/* ================= 카드 그리드 (2x3): PNG 자체가 버튼 ================= */
+.card-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 5px 24px 24px;
+}
+
+.card {
+    position: relative;
+    display: block;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+}
+.card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    vertical-align: top;
+}
+.card:active {
+    opacity: 0.9;
+}
+
+/* 카드 버튼 공통: 배경 = PNG, 텍스트만 오버레이. 비율 유지(찌부 방지) */
+.card-bg {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    aspect-ratio: 1;
+    min-height: 140px;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+.card-bg .card-bg-text {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    display: block;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #7A4B3A;
+    z-index: 1;
+    pointer-events: none;
+}
+.card-bg:active {
+    opacity: 0.92;
+}
+
+/* ================= 기억 보기: 다른 카드 버튼과 동일 구조(배경 PNG + 텍스트), 풀 위에 겹치도록 ================= */
+.report-area {
+    position: relative;
+    z-index: 2;
+    padding: 0 24px 24px;
+    margin-bottom: -24px;
+}
+.report-btn {
+    display: block;
+    width: 100%;
+    min-height: 100px;
+    aspect-ratio: 4 / 1;
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+}
+.report-btn .card-bg-text {
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ================= 하단 풀 (기억 보기 버튼 뒤 레이어) ================= */
+.grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    z-index: 0;
+    object-fit: cover;
+    object-position: bottom;
+}
+/* 식사 화면 내 풀: 메인과 동일하게 하단 고정 */
+.food-screen .food-grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 0;
+    pointer-events: none;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+/* ================= 화면 전환 ================= */
+.screen {
+    display: none;
+    position: relative;
+    z-index: 2;
+    min-height: 100%;
+}
+.screen.active {
+    display: block;
+}
+
+/* ================= 식사 화면 (식사버튼.png 목업 픽셀 단위 동일 배치) ================= */
+.food-screen {
+    background: var(--frame-bg);
+    padding-bottom: 120px;
+}
+/* 헤더: 뒤로가기·식사 동일 왼쪽 정렬, 상단·좌측 여백 목업과 동일 */
+.food-header {
+    display: flex;
+    align-items: center;
+   
+    padding: 71px 24px 0;
+    background: transparent;
+}
+.food-title {
+    font-size: 55px;
+    font-weight: 700;
+    color: #574444;
+    line-height: 1.2;
+}
+.food-screen .back-btn {
+    color: #574444;
+    font-size: 26px;
+    padding: 0;
+    flex-shrink: 0;
+    line-height: 1;
+}
+/* 안내문: 식사 제목 바로 아래, 좌측 정렬 동일, 제목과 간격·카드와 간격 목업과 동일 */
+.food-instruction {
+    margin-top: 14px;
+    padding: 0 24px;
+    padding-bottom: 28px;
+    font-size: 30px;
+    color: #574444;
+    line-height: 1.5;
+}
+/* 카드 영역: 가로 중앙, 좌우 24px, 카드 간 동일 간격 */
+.meal-cards {
+    padding: 32px 24px 32px;
+}
+.meal-card {
+    position: relative;
+    width: 100%;
+    max-width: 304px;
+    height: 133.72px;
+    margin: 20px auto 40px;
+    background: #FFFCF7;
+    border-radius: 30px;
+    padding: 18px 24px 16px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px 3px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.meal-card:last-child {
+    margin-bottom: 0;
+}
+/* 식사버튼.png 목업과 동일: breakfast/dinner/lunch 아이콘 위치·크기 */
+.meal-icon {
+    position: absolute;
+    object-fit: contain;
+    pointer-events: none;
+}
+.meal-icon--breakfast {
+    top: -50px;
+    right: -40px;
+    width: 100px;
+    height: 100px;
+}
+.meal-icon--lunch {
+    left: -45px;
+    top: 0%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+}
+.meal-icon--dinner {
+    top: -30px;
+    right: -40px;
+    width: 70px;
+    height: 70px;
+}
+/* 카드 내 제목: 좌상단, 목업과 동일 패딩·간격 */
+.meal-card h3 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #574444;
+    margin: 0 0 14px 0;
+    text-align: left;
+}
+/* 체크하기: 카드 내 가로 중앙, 제목과 적당한 간격, 목업 색상 */
+.meal-check-btn {
+    display: block;
+    width: 100%;
+    max-width: 267.52px;
+    height: 46.55px;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    border-radius: 17px;
+    background: #FAC937;
+    font-size: 30px;
+    font-weight: 400;
+    color: #574444;
+    cursor: pointer;
+    line-height: 46.55px;
+}
+.meal-check-btn:active {
+    opacity: 0.92;
+}
+.meal-check-btn.checked {
+    opacity: 0.85;
+}
+
+/* ================= 외출/복귀 화면 (목업: 외출복귀(외출).png 동일) ================= */
+.outing-screen {
+    background: var(--frame-bg);
+    padding-bottom: 120px;
+}
+.outing-header {
+    display: flex;
+    align-items: center;
+   
+    padding: 71px 24px 0;
+    background: transparent;
+}
+.outing-title {
+    font-size: 55px;
+    font-weight: 700;
+    color: #574444;
+    line-height: 1.2;
+}
+.outing-screen .outing-header .back-btn {
+    color: #574444;
+    font-size: 26px;
+    padding: 0;
+    flex-shrink: 0;
+}
+.outing-info {
+    margin-top: 14px;
+    padding: 0 24px 28px;
+    font-size: 30px;
+    color: #574444;
+    line-height: 1.5;
+}
+.outing-card-wrap {
+    padding: 0 24px 32px;
+}
+.outing-card {
+    max-width: 304px;
+    margin: 0 auto;
+    height: 490px;
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding-top: 100px;
+    padding: 28px 24px 24px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px 3px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+.outing-icon-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 40px auto 16px;
+}
+.outing-icon {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+.outing-icon--return {
+    display: none;
+}
+#status-card.out .outing-icon--out {
+    display: none;
+}
+#status-card.out .outing-icon--return {
+    display: block;
+}
+.outing-home-label {
+    display: block;
+    font-size: 48px;
+    font-weight: 700;
+    color: #25B418;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+.outing-return-time {
+    font-size: 20px;
+    color: #574444;
+    margin: 0 0 20px 0;
+}
+.outing-btn {
+    display: block;
+    width: 250px;
+    height: 62px;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    border-radius: 17px;
+    background: #FAC937;
+    font-family: 'Dunggeunmo', sans-serif;
+    font-size: 27px;
+    font-weight: 400 !important;
+    color: #574444;
+    cursor: pointer;
+    line-height: 62px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.outing-btn:active {
+    opacity: 0.92;
+}
+/* 외출 중일 때: "외출 중" 텍스트 색상 */
+#status-card.out #status-text {
+    color: #FF6363;
+}
+
+/* ================= 서브 화면 공통 ================= */
+.sub-header {
+    display: flex;
+    align-items: center;
+    
+    padding: 20px 24px;
+    background: #F9F5EE;
+}
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #362A00;
+    cursor: pointer;
+    padding: 4px;
+}
+.sub-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #362A00;
+}
+
+.check-card {
+    background: #FCF9F2;
+    border: 2px solid rgba(54, 42, 0, 0.1);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin: 0 24px 14px;
+}
+.check-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #362A00;
+    margin-bottom: 10px;
+}
+.check-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    background: #FFE399;
+    border: 2px solid rgba(54, 42, 0, 0.12);
+    font-size: 15px;
+    font-weight: 700;
+    color: #362A00;
+    cursor: pointer;
+}
+.check-btn.checked {
+    opacity: 0.85;
+    transform: scale(0.98);
+}
+
+.mypage-placeholder {
+    padding: 40px 24px;
+    text-align: center;
+    color: #362A00;
+}
+
+/* 마이페이지 (guard.jsp와 동일한 화면) */
+#mypage.screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.mypage-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    max-width: 100%;
+    text-align: center;
+    background: #fff;
+    margin: 0;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.mypage-box-title {
+    color: #333;
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+.mypage-box-desc {
+    color: #777;
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+.mypage-box-btn {
+    margin-top: 30px;
+    padding: 10px 25px;
+    border-radius: 50px;
+    border: none;
+    background: #ff7e5f;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Dunggeunmo', sans-serif;
+}
+.mypage-box-btn:hover {
+    background: #e86f52;
+}

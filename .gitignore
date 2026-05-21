@@ -1,0 +1,15 @@
+# Eclipse / IDE
+.metadata/
+**/.metadata/
+**/tmp0/
+**/wtpwebapps/
+**/work/
+.settings/org.eclipse.wst.server.core.prefs
+
+# Build
+/build/
+/target/
+*.class
+
+# Logs
+*.log

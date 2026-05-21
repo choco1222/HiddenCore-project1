@@ -1,0 +1,333 @@
+/* ===================================
+   로그인 페이지 CSS
+   =================================== */
+
+/* 기본 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* main.jsp와 동일: 프레임 밖 배경색 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    background: #FFDF7C;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* main.jsp와 동일: 프레임 크기·위치 (440x956 기준) */
+.app-frame {
+    width: 100%;
+    max-width: 440px;
+    height: 100vh;
+    max-height: 956px;
+    min-height: 560px;
+    background: #FFFBEF;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 441px) {
+    .app-frame {
+        height: 956px;
+        border-radius: 28px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* ===================================
+   컨테이너
+   =================================== */
+.login-container {
+    width: 100%;
+    max-width: 480px;
+    background: transparent;
+    justify-items: center;
+    padding: 20px;
+}
+
+/* ===================================
+   로고 영역
+   =================================== */
+.logo-area {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.logo-img {
+    width: 180px;
+    height: auto;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+/* ===================================
+   폼 영역
+   =================================== */
+.login-form {
+    width: 80%;
+}
+
+/* ===================================
+   입력 필드 (통합 박스)
+   =================================== */
+.input-container {
+    border: 1px solid #D0D0D0;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group:first-child {
+    border-bottom: 1px solid #E8E8E8;
+}
+
+#loginId{
+    border-radius: 16px 16px 0 0;
+    outline : solid 1px #CCCCCC;
+}
+
+#loginPassword{
+	border-radius: 0 0 16px 16px;
+    outline : solid 1px #CCCCCC;
+}
+
+.input-field {
+    width: 100%;
+    padding: 18px 20px;
+    border: none;
+    background: #FFF;
+    font-size: 16px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.input-field::placeholder {
+    color: #C5C5C5;
+}
+
+.input-field:focus {
+    outline: none;
+}
+
+/* ===================================
+   로그인 상태 유지 체크박스
+   =================================== */
+.checkbox-group {
+    margin: 24px 0 32px 0;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #71533E;
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: #71533E;
+}
+
+.checkbox-label {
+    font-size: 16px;
+    color: #71533E;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ===================================
+   로그인 버튼
+   =================================== */
+.login-button {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 12px;
+    background: #FFEFA9;
+    color: #71533E;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 40px;
+}
+
+.login-button:hover {
+    background: #FFE890;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 239, 169, 0.4);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+/* ===================================
+   하단 링크
+   =================================== */
+.links-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.link {
+    font-size: 15px;
+    color: #71533E;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    color: #5A4230;
+}
+
+.link-divider {
+    width: 1px;
+    height: 14px;
+    background: #D0D0D0;
+}
+
+.link.signup {
+    color: #FFBF3F;
+    font-weight: 500;
+}
+
+.link.signup:hover {
+    color: #FFA000;
+}
+
+/* ===================================
+   에러 메시지
+   =================================== */
+.error-message {
+    background: #FFE5E5;
+    color: #D32F2F;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ===================================
+   반응형 - 태블릿/모바일 (600px 이하)
+   =================================== */
+@media (max-width: 600px) {
+    body {
+        padding: 16px;
+    }
+
+    .login-container {
+        max-width: 100%;
+    }
+
+    .logo-area {
+        margin-bottom: 60px;
+    }
+
+    .logo-img {
+        width: 150px;
+    }
+
+    .input-field {
+        padding: 16px 18px;
+        font-size: 15px;
+    }
+
+    .login-button {
+        padding: 16px;
+        font-size: 17px;
+        margin-bottom: 30px;
+    }
+
+    .checkbox-label,
+    .link {
+        font-size: 14px;
+    }
+}
+
+/* ===================================
+   반응형 - 아이폰 (414px 이하)
+   =================================== */
+@media (max-width: 414px) {
+    .login-container {
+        max-width: 375px;
+        margin: 0 auto;
+    }
+
+    .logo-area {
+        margin-bottom: 50px;
+    }
+
+    .logo-img {
+        width: 140px;
+    }
+
+    .input-container {
+        margin-bottom: 20px;
+    }
+
+    .input-field {
+        padding: 15px 18px;
+        font-size: 15px;
+    }
+
+    .checkbox-group {
+        margin: 20px 0 28px 0;
+    }
+
+    .login-button {
+        padding: 15px;
+        font-size: 17px;
+        margin-bottom: 28px;
+    }
+}
+
+/* ===================================
+   반응형 - 작은 모바일 (375px 이하)
+   =================================== */
+@media (max-width: 375px) {
+    .login-container {
+        max-width: 343px;
+    }
+
+    .logo-img {
+        width: 130px;
+    }
+
+    .input-field {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+
+    .login-button {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    .checkbox-label,
+    .link {
+        font-size: 13px;
+    }
+}

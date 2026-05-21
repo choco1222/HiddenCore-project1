@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+/* 게임화면.png 목업 기준 - 식사/양치 화면과 동일한 프레임·배경·폰트 */
+* { box-sizing: border-box; }
+
+.game-page-body {
+  margin: 0;
+  min-height: 100vh;
+  background: #FFDF7C;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+}
+
+.game-frame {
+  width: 100%;
+  max-width: 440px;
+  min-height: 100vh;
+  position: relative;
+  background: #FFFBEF;
+  overflow: hidden;
+}
+
+/* 헤더: 뒤로가기 + 게임 (목업과 동일) */
+.game-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.game-back-btn {
+  color: #574444;
+  font-size: 26px;
+  text-decoration: none;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.game-title {
+  font-size: 55px;
+  font-weight: 700;
+  color: #574444;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* 부제: 재밌는 게임과 함께 / 기억훈련 해요! */
+.game-subtitle {
+  margin: 14px 24px 28px;
+  font-size: 30px;
+  color: #574444;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+/* 게임 버튼 영역 (목업: 세로 배치, 간격) */
+.game-btns {
+  padding: 0 24px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.game-btn {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 304px;
+  height: 133px;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  border-radius: 30px;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-decoration: none;
+  box-shadow: 0 4px 6px 3px rgba(0, 0, 0, 0.3);
+}
+
+.game-btn:active {
+  opacity: 0.92;
+}
+
+.game-btn-text {
+  position: absolute;
+  top: 50%;
+  left: 28px;
+  transform: translateY(-50%);
+  font-size: 28px;
+  font-weight: 700;
+  color: #574444;
+  pointer-events: none;
+}
+
+/* 하단 풀 (메인과 동일) */
+.game-grass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+  object-fit: cover;
+  object-position: bottom;
+}
